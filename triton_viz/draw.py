@@ -1,25 +1,28 @@
-from colour import Color
-from triton_viz.data import (
-    Tensor,
-    Grid,
-    Store,
-    Load,
-    Op,
-    MakeRange,
-    Reduce,
-    Dot,
-)
-from .interpreter import record_builder
+import math
+import sys
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple, Union
+
+import chalk
 import numpy as np
 import numpy.typing as npt
 import planar
-import math
-import chalk
-from typing import Tuple, Union, Optional, List, Dict
-from chalk import Diagram, rectangle, text, hcat, vcat, empty, Path, Trail, V2, concat
-from dataclasses import dataclass
+from chalk import V2, Diagram, Path, Trail, concat, empty, hcat, rectangle, text, vcat
+from colour import Color
 from numpy.typing import ArrayLike
-import sys
+
+from triton_viz.data import (
+    Dot,
+    Grid,
+    Load,
+    MakeRange,
+    Op,
+    Reduce,
+    Store,
+    Tensor,
+)
+
+from .interpreter import record_builder
 
 sys.setrecursionlimit(100000)
 
@@ -139,7 +142,7 @@ def draw_launch(program_records, tensor_table, base) -> Diagram:
     dr = dr.center_xy()
     env = dr.get_envelope()
     dr = rectangle(env.width + 1, env.height + 1).fill_color(BG).center_xy() + dr
-    dr.render_svg(base, 2500)
+    dr.render(base, 2500)
     return env.width, env.height
 
 

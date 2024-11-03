@@ -1,9 +1,12 @@
-import gradio as gr
-import triton_viz
 import tempfile
+
+import gradio as gr
+import pandas as pd
+
+import triton_viz
+
 from .analysis import analyze_records
 from .tooltip import create_tooltip
-import pandas as pd
 
 
 def launch(share=True):
@@ -52,7 +55,7 @@ def launch(share=True):
                     )
 
         def cache_block(idx):
-            name = tempfile.NamedTemporaryFile(suffix=".svg")
+            name = tempfile.NamedTemporaryFile(suffix=".png")
             w, h = triton_viz.draw_record(program_records[idx], tt, name.name)
             size[0] = w
             size[1] = h
